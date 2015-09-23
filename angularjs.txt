@@ -1,0 +1,34 @@
+DIRECTIVES
+ng-app
+ng-controller
+ng-repeat
+ng-show
+ng-hide
+ng-src
+ng-init
+ng-click
+ng-model
+ng-submit
+ng-include
+
+FORM DIRECTIVES
+novalidate
+required
+reviewForm.$valid
+
+EXPRESSIONS & FILTERS
+{{expr}}
+{{expr | expr}}
+{{expr | expr:options}}
+
+{{'...' | currency}}
+{{'...' | date:'MM/dd/yyyy'}}
+{{'aBc' | uppercase}}
+{{'aBc' | lowercase}}
+{{'aBc' | limitTo:5}}
+{{'...' | orderBy:'-attr'}}
+
+CUSTOM DIRECTIVES
+* Element directives for UI widgets
+* Attribute directive for mixin behaviors
+
