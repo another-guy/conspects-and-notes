@@ -1,0 +1,65 @@
+HOW PDF IS STRUCTURED
+
+ Header     - PDF ver
+ Body       - Sequence of objects
+ [Objects]  - fonts, drawing cmds, images, words, bookmarks...
+ xRef Table - mapping objID; byte offset
+ Trailer    - root ObjID, xRef byte offset
+ ^^^^^^^^     root obj = ref to pages catalog
+ PDF file
+
+PROCESSING in PDF.JS
+
+* Get plain Uint8Array via XHR2, build Stream
+* new PDFDoc(stream): read xRef, root object
+* page = PDFDoc.getPage(N)
+* page.startRendering(graphics)
+  * read & convert all PDF commands -> IR (Internal representation)  | PartialEvaluator
+  * load required objects (fonts, images)
+  * graphics.executeIR(IR)
+
+PDFDoc.getPage(N)
+-> obj#3
+
+3 0 obj
+<<
+/Type /Page
+/MediaBox [0 0 612 792]
+/Resources 4 0 R
+/Parent    2 0 R
+/Contents  5 0 R
+>>
+endobj
+
+page.startRendering
+-> obj$4, obj#5
+
+5 0 obj
+<<
+/Length    8 0 R
+>>
+
+stream
+/GSR gs
+/F0 I 2 Tf
+BT
+  100 700 Td
+  (Hello World!) Tj
+ET
+50 600 m
+400 600 l
+S
+endstream
+endobj
+
+IMAGES
+* JPEG stream
+  DOMImg.src = 'data:image/jpeg:base64,' + window.btoa(bytesToString(bytes));
+* If not JPEG streram:
+  read bytes, convert to colorspace
+  * imgData = canvas.getImageData()
+  * fillWithPixelData(bytes, imgData)
+  * canvas.putImageData(imgData)
+
+FONTS
+
